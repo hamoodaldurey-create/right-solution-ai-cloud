@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0 — 2026-10-08
+
+- Expanded to 15 bilingual commercial guides and editable business templates.
+- Added conversational greetings, explicit answer-language requests, and profit/break-even calculations.
+- Added opt-in WebLLM/Qwen3 inference on the visitor's device, with no paid API.
+- Added loading progress, streaming, cancellation, compatibility errors, and bounded context.
+- Labelled generated drafts separately from company facts and deterministic calculations.
+- Updated privacy and network policy for optional model downloads and browser caching.
+- Added commercial and model-adapter checks; real GPU inference and broad answer quality are not verified by these unit tests.
+
 ## 0.3.0 — 2026-10-08
 
 - Continued the original v0.2 knowledge and lead-summary flow.
