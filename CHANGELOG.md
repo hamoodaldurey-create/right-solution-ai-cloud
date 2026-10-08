@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.0 — 2026-10-08
+
+- Port the existing free interface to public assets with a Sites-compatible Vinext Worker and D1 ledger; preserve Site identity and private access.
+- Prepare optional OpenAI Responses integration, disabled until a secure server key and explicit activation are configured. No paid inference request was made.
+- Add a conservative $12 monthly quota, atomic worst-case reservations, total-token settlement, safe handling of uncertain billing, and shared concurrency limits.
+- Add bilingual availability/budget controls, cloud draft labels, review markers, bounded context, and clear privacy/cancellation behavior.
+- Preserve deterministic greetings, company facts, calculations and current-information guards, plus the optional on-device model.
+- Add SQLite-backed budget and mocked provider/client tests. Validate the Worker build and legacy regression suite.
+
+
 ## 0.4.0 — 2026-10-08
 
 - Expanded to 15 bilingual commercial guides and editable business templates.

@@ -1,79 +1,78 @@
-# Right Solution AI Cloud — Free Beta v0.4
+# Right Solution AI Cloud — Beta v0.5
 
-مساعد أعمال بالعربية والإنجليزية، مطوّر من الإصدار 0.2. يعمل الوضع الأساسي فوراً، مع خيار نموذج لغوي مجاني يعمل على جهاز الزائر. لا توجد مفاتيح API أو مدفوعات أو خدمات استدلال مدفوعة في النسخة المنشورة.
+مساعد أعمال بالعربية والإنجليزية، مطوّر من الإصدار 0.2. الوضع المجاني يعمل فوراً: تحيات، 15 دليلاً تجارياً، قوالب مراسلات، وحاسبة الربح والتعادل. يمكن تفعيل Qwen3 محلياً على جهاز يدعم WebGPU.
+
+**إجابات OpenAI مجهّزة برمجياً لكنها غير مفعّلة في النسخة المنشورة. لا يوجد مفتاح API محفوظ، ولم يُنفّذ أي طلب استدلال مدفوع.** يظهر ذلك في إعدادات البرنامج؛ يبقى خيار OpenAI غير قابل للتفعيل حتى إعداد الخادم بأمان. هذه النسخة لا تَعِد بالتفوّق على ChatGPT أو بإجابة مليون سؤال إجابة صحيحة.
 
 ## جرّب البرنامج
 
-1. اكتب تحية أو سؤالاً مثل «كيف أزيد المبيعات؟» أو «أريد خطة تسويق».
-2. جرّب «التكلفة ٨٠ وسعر البيع ١٠٠» لحساب ربح الوحدة والهامش، أو افتح حاسبة الربح والتعادل.
-3. للحصول على إجابات توليدية أوسع، افتح **ذكاء اصطناعي يعمل على جهازك**، واختر Qwen3 0.6B أو 1.7B ثم اضغط **تحميل وتفعيل الذكاء المحلي**.
-4. انتظر ظهور حالة الجاهزية. يحتاج النموذج WebGPU وذاكرة كافية. التحميل الأول قد يكون مئات الميغابايت أو أكثر من غيغابايت؛ استخدم اتصالاً مناسباً مثل Wi-Fi.
+- اكتب «السلام عليكم»، «كيف أزيد المبيعات؟» أو «أريد خطة تسويق».
+- جرّب «التكلفة ٨٠ وسعر البيع ١٠٠» أو افتح حاسبة الربح والتعادل.
+- افتح **إجابات OpenAI** لمشاهدة حالة الربط والسقف الشهري والمبلغ المحسوب والمحجوز. الوضع السحابي اختياري لكل جلسة، ولا يُختار تلقائياً.
+- لتجربة النموذج المجاني على جهازك، افتح **ذكاء اصطناعي يعمل على جهازك** واختر Qwen3 0.6B أو 1.7B. التنزيل الأول كبير ويحتاج متصفحاً وذاكرة وجهازاً مناسباً. لم يُختبر الاستدلال الفعلي على GPU ضمن هذه الجلسة.
 
-عند عدم التوافق أو فشل التحميل، تبقى الإرشادات والقوالب الأساسية متاحة، ويظهر سبب الفشل. إيقاف الإجابة يوقف العامل المحلي؛ يحتاج النموذج تفعيلًا جديداً قبل توليد إجابة أخرى، وقد يستفيد من ملفات التنزيل المخزّنة.
+الموقع المنشور يحافظ على الوصول الخاص لصاحبه عبر تسجيل دخول ChatGPT. المستودع في GitHub عام. لا تُرسل مسودات العملاء إلى بريد إلكتروني أو CRM؛ القوالب قابلة للتنزيل فقط.
 
-## What works
+## Spending protection
 
-- Arabic and English interface; answer language follows the question or an explicit language request.
-- Greetings, thanks, and a clear explanation of capabilities.
-- **15 commercial guides**: business plans, marketing, sales, product pricing, cash flow, customer service, e-commerce, operations, procurement, hiring, strategy, market research, proposals, business correspondence, and negotiation.
-- Separate labels for general templates, application facts, calculations, and generated local AI drafts.
-- Profit, margin, markup, revenue, fixed-cost contribution, and break-even calculations, including Arabic digits in chat.
-- Optional **WebLLM 0.2.84 / Qwen3** generation and streaming in a dedicated Web Worker. Downloads begin only after an explicit click. The adapter selects f16 or f32 according to GPU capabilities.
-- Progress, hardware/download errors, cancellation, context limits, and generation timeout handling.
-- Original editable bilingual application knowledge, source labels, lead drafts, and text downloads.
-- Read-only-permission checks on standard GitHub runners in public repositories only.
+The approved API budget is at most **5 OMR per calendar month**. This release uses a conservative **$12/month application quota**, approximately **4.62 OMR** at an illustrative 0.385 OMR/USD conversion, before bank fees and tax. This is the quota for requests made by this application, not an account-wide OpenAI billing limit or a guarantee about currency conversion or external fees.
 
-## Free mode and honest limits
+The server fixes the model to `gpt-5.4-mini-2026-03-17`, standard service tier, no tools, no browsing, no retries, and at most 512 output tokens. Rates checked on 2026-10-08: $0.75 per million input tokens and $4.50 per million output tokens. Review the official rates before any later activation or model change; billing estimates use these stored prices.
 
-The basic mode is a deterministic guide and knowledge engine, not a language model. Optional Local AI generates open-ended answers on compatible hardware; it is **not limited to a million stored question/answer pairs**. Neither mode guarantees one million correct answers or superiority to ChatGPT. Small local models have limited accuracy, Arabic fluency, reasoning, and context. Review generated drafts before relying on them.
+Before any provider call, one atomic SQL statement reserves the worst-case cost for 8,192 input and 512 output tokens. Exact token counting must pass before generation. D1 is the authoritative ledger, shared across sessions and requests; page reloads cannot clear it. Settled requests use reported total input/output tokens, rounded up and without a cached-input discount. A timed-out or otherwise uncertain generation keeps its full reservation because it may still be billable. No automatic retries or automatic refunds occur after generation starts. Unexpected model, service tier, or usage limits pause later cloud requests for review.
 
-Application policy questions and exact calculations use the deterministic engine even while Local AI is enabled. Questions asking for current information or legal/tax rules request verification instead of generating unverified facts. There is no live browsing, trained company model, autonomous action, CRM connection, or email sending. Example prices from v0.2 remain illustrative; the published beta does not sell paid plans.
+Requests are assigned to the calendar month at admission, in **Asia/Dubai (UTC+4)**. Old records remain when a new month begins. A month change during token preflight blocks generation. At most one recent cloud request runs at a time. Requests stop before their worst-case reservation would exceed the available quota, so a small residual amount may remain unused.
 
-No paid inference request, subscription, custom domain, or GPU server is provisioned. Model downloads consume the visitor's ordinary internet connection and storage. Hosting providers and download hosts may keep normal access logs.
+Missing activation, a missing key, unavailable storage, exhausted budget, or provider errors preserve free answers. Application facts, greetings, exact calculations, and questions requiring current legal/tax information stay with the deterministic engine even if cloud mode is later enabled.
+
+## Server activation status
+
+Production is deliberately configured with `OPENAI_ENABLED=0` and `CLOUD_BUDGET_USD=12`; no `OPENAI_API_KEY` has been provisioned. A key must be configured as a server secret through an authorized secure setup before activation. Never paste a key into chat, client code, GitHub, the hosting manifest, or browser storage. After a secure key setup, activation also needs a new deployment and a small real API acceptance check within the approved budget. Those steps remain pending; mock tests do not establish API-account access, credit availability, or live model quality.
+
+The key is never sent to the browser. Only the server can call the fixed OpenAI endpoint. Browser POSTs must be signed in, same-origin, bounded JSON. Client input cannot select a model, tool, instruction override, token cap, or budget. Site dispatch owns authentication and the current owner-only access policy is preserved.
 
 ## Privacy
 
-Questions, conversations, lead details, and knowledge edits live in page memory and reset on reload or close. Prompts are processed by the on-device worker; our application has no client that sends them to an AI API. Model and runtime downloads come from jsDelivr, Hugging Face, and MLC's published artifacts. Model files may be retained in browser caches until cleared or evicted. Downloads of conversations or leads remain on the visitor's device. Use sample information, not passwords or payment details.
+In free modes, questions, conversations, knowledge edits, and lead drafts remain in page memory and reset when the page reloads or closes. Optional local inference downloads runtime/model files from jsDelivr, MLC, and Hugging Face; those hosts see ordinary download requests, and model files may remain in browser caches.
 
-The unchanged `legacy/v02` Streamlit prototype is retained for regression checks. Its optional OpenAI mode can cost money and is **not used by the published beta**.
+Only if an available cloud mode is explicitly selected, the application sends the question, up to four recent messages, and bounded knowledge excerpts to OpenAI. The response uses `store:false`; that setting does not by itself promise zero provider retention. The server ledger stores request ID, Site user ID, month, timestamps, token counts and quota amounts, **without question or answer text**. The application does not log prompts, API keys or raw provider errors. Hosts may keep normal access logs. Downloaded conversation and lead files remain on the visitor's device. Use sample information rather than passwords, payment details or sensitive records.
 
-## Run locally
+Stopping the cloud answer display or closing the page does not guarantee cancellation of an already-started request or its cost. Free answers remain available after cancellation or failure.
 
-The basic mode needs no npm install or API key:
+## Local use and validation
+
+The free interface remains dependency-free:
 
 ```bash
-python3 -m http.server 8080 --directory dist
+python3 -m http.server 8080 --directory public
 ```
 
-Open `http://localhost:8080`. Local AI also needs a compatible secure browser context, WebGPU, and internet access to download public model files. All application asset paths are relative.
-
-## Validation
-
-Requires Node.js 20+ and Python 3:
+For the hosted Worker build, install from the pnpm lockfile using the Sites setup workflow. The development/build entry points are the bundled Vinext workflow:
 
 ```bash
 npm test
 npm run check
 OPENAI_API_KEY='' python3 -m unittest discover -s legacy/v02 -p test_engine.py -v
+npm run build
 ```
 
-The suites exercise bilingual commercial routing, greetings, fact grounding, calculation edge cases, and model lifecycle/error handling. **The adapter tests use test doubles. They do not validate real WebGPU inference, model answer quality, or a million questions.** Real-device download and generation remain an acceptance check on a compatible browser. No browser UI preview was available in the build environment.
+Requires Node.js 22.13+ and Python 3. The tests cover bilingual routing, calculations, model lifecycle, atomic SQL budget admission, simultaneous requests, duplicates, month changes, missing keys, missing storage, provider failures, and secret-free payloads. Budget SQL runs against real SQLite in tests; provider and GPU adapters use test doubles. **No live paid API request, browser UI check, or real GPU inference was performed.** The local Worker build was validated.
 
-The GitHub workflow runs only for public repositories and skips private repositories to avoid paid runner minutes. It uses read-only repository permission. GitHub source updates and CI do **not** automatically redeploy the hosted beta.
+The GitHub workflow uses read-only permissions and standard public-repository runners only, with no dependency install required for the behavior tests. It does not automatically deploy the Site. D1 schema changes use generated, versioned Drizzle migrations; no runtime table creation or seed data is used.
 
 ## Source layout
 
 | Path | Purpose |
 | --- | --- |
-| `dist/index.html`, `dist/styles.css` | Responsive Arabic-first working interface |
-| `dist/engine.mjs` | Application facts, language selection, greetings, lead drafts |
-| `dist/business.mjs` | Business guides and calculations |
-| `dist/local-model.mjs`, `dist/model-worker.mjs` | Optional on-device model lifecycle and streaming |
-| `dist/app.mjs` | Shared visible form and optional WebMCP actions |
-| `tests/` | Behavior and adapter tests |
-| `legacy/v02/` | Original prototype |
-| `.github/workflows/ci.yml` | Public-repository checks |
+| `public/index.html`, `public/styles.css`, `public/app.mjs` | Arabic/English working interface and cloud status |
+| `public/engine.mjs`, `public/business.mjs` | Deterministic facts, guides, greetings and calculations |
+| `public/local-model.mjs`, `public/model-worker.mjs` | Optional WebLLM/Qwen3 inference on the visitor's device |
+| `public/cloud-model.mjs` | Same-origin cloud client, bounded context and display cancellation |
+| `server/cloud.mjs`, `server/budget.mjs` | Disabled-by-default provider adapter and durable quota guard |
+| `db/schema.ts`, `drizzle/` | D1 ledger schema and generated migrations |
+| `build/`, `scripts/`, `app/`, `vite.config.ts` | Sites-compatible Vinext Worker build and root redirect |
+| `dist/` | Generated deployment output, ignored by Git |
+| `tests/`, `.github/workflows/ci.yml` | Behavioral and regression checks |
+| `legacy/v02/` | Original Streamlit prototype, unused by the published beta |
 
-Optional page-scoped WebMCP tools are feature-detected and use the same actions as the forms. They never initiate model downloads.
-
-Runtime references: [WebLLM documentation](https://webllm.mlc.ai/docs/user/basic_usage.html), [worker example and license](https://github.com/mlc-ai/web-llm), [Qwen3 0.6B model card](https://huggingface.co/Qwen/Qwen3-0.6B). WebLLM and the Qwen3 model are published under Apache-2.0; they are upstream dependencies, not models trained by this project.
+Official references: [GPT-5.4 Mini model and pricing](https://developers.openai.com/api/docs/models/gpt-5.4-mini), [input token counting](https://developers.openai.com/api/docs/guides/token-counting), [Responses API](https://developers.openai.com/api/reference/python/resources/responses/methods/create), [D1 database API](https://developers.cloudflare.com/d1/worker-api/d1-database/), [WebLLM](https://webllm.mlc.ai/docs/user/basic_usage.html), [Qwen3 model card](https://huggingface.co/Qwen/Qwen3-0.6B).
