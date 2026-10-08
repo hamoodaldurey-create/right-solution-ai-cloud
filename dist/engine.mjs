@@ -46,6 +46,18 @@ function includesTerm(text,term) {
   const needle = normalize(term).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
   return new RegExp(`(^|[^\\p{L}\\p{N}])${needle}(?=$|[^\\p{L}\\p{N}])`,'u').test(text);
 }
+function greetingReply(text,language) {
+  const clean = text.replace(/[.!?؟،,؛:]+$/gu,'').trim();
+  if (language==='ar') {
+    const help = 'كيف أساعدك؟ يمكنك سؤالي عن الأسعار أو التكامل أو الخصوصية أو ساعات الدعم أو الاسترجاع.';
+    if (/^السلام عليكم(?: و?رحمه الله(?: و?بركاته)?)?$/u.test(clean)) return 'وعليكم السلام ورحمة الله وبركاته! '+help;
+    if (['مرحبا','اهلا','اهلا وسهلا','هلا'].includes(clean)) return 'أهلاً وسهلاً! '+help;
+    if (clean==='صباح الخير') return 'صباح النور! '+help;
+    if (clean==='مساء الخير') return 'مساء النور! '+help;
+  }
+  if (language==='en' && ['hello','hi','hey','good morning','good afternoon','good evening'].includes(clean)) return 'Hello! How can I help? You can ask about pricing, integrations, privacy, support hours, or refunds.';
+  return null;
+}
 export function getReply(question, knowledge=DEFAULT_KNOWLEDGE, uiLanguage='ar', history=[]) {
   if (typeof question !== 'string' || !question.trim() || question.length > LIMITS.question) throw new Error('Question must contain 1–2000 characters');
   validateKnowledge(knowledge);
@@ -59,6 +71,8 @@ export function getReply(question, knowledge=DEFAULT_KNOWLEDGE, uiLanguage='ar',
     followup = topics.length > 0;
   }
   const sources = topics.map(id=>knowledge.find(item=>item.id===id));
+  const greeting = !sources.length ? greetingReply(text,language) : null;
+  if (greeting) return {language,topics:[],sources:[],review:false,followup:false,mode:'free-local',text:greeting};
   if (!sources.length) return {language,topics:[],sources:[],review:true,followup:false,mode:'free-local',text:language==='ar'
     ? 'لا أجد معلومة تدعم إجابة هذا السؤال في قاعدة المعرفة الحالية. اطلب مراجعة بشرية، أو أضف المعلومة الصحيحة في «قاعدة المعرفة». يمكنك سؤالي عن الأسعار أو الربط أو الخصوصية أو ساعات الدعم أو الاسترجاع.'
     : 'I cannot verify this from the current knowledge base. Ask for human review, or add the correct information in Knowledge. You can ask about pricing, integrations, privacy, support hours, or refunds.'};
