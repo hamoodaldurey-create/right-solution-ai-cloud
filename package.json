@@ -1,0 +1,12 @@
+{
+  "name": "right-solution-ai-cloud",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Free bilingual grounded sales and support beta, continued from v0.2",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check dist/app.mjs && node --check dist/engine.mjs"
+  },
+  "engines": {"node": ">=20"}
+}
