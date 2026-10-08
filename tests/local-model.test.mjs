@@ -1,8 +1,8 @@
 // These verify our adapter with test doubles, not real GPU inference quality.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {LocalModel,buildModelMessages,cleanModelText,RUNTIME_URL} from '../dist/local-model.mjs';
-import {cloneKnowledge} from '../dist/engine.mjs';
+import {LocalModel,buildModelMessages,cleanModelText,RUNTIME_URL} from '../public/local-model.mjs';
+import {cloneKnowledge} from '../public/engine.mjs';
 
 const deferred=()=>{let resolve;const promise=new Promise(r=>resolve=r);return {promise,resolve};};
 function fixture(options={}){

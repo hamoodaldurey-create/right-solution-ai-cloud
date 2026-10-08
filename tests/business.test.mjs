@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {BUSINESS_GUIDES,calculateUnitEconomics} from '../dist/business.mjs';
-import {getReply,conversationSummary} from '../dist/engine.mjs';
+import {BUSINESS_GUIDES,calculateUnitEconomics} from '../public/business.mjs';
+import {getReply,conversationSummary} from '../public/engine.mjs';
 
 test('Practical commercial questions work in both languages without company pricing leakage',()=>{
   const cases=[
