@@ -1,0 +1,26 @@
+name: Free beta checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    # Standard public-repository runner only; do not consume private paid minutes.
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+      - run: npm run check
+      - run: python3 -m unittest discover -s legacy/v02 -p test_engine.py -v
+        env:
+          OPENAI_API_KEY: ''
