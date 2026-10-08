@@ -8,6 +8,12 @@ test('English pricing is explicitly illustrative and beta is free',()=>{const r=
 test('Arabic built-in free prompt matches',()=>assert.deepEqual(getReply('هل التجربة مجانية؟').topics,['pricing']));
 test('Arabic built-in integrations prompt matches',()=>assert.deepEqual(getReply('ما التكاملات المتاحة؟').topics,['integration']));
 test('Arabic built-in privacy prompt matches after diacritic normalization',()=>assert.deepEqual(getReply('كيف تُحفظ بياناتي؟').topics,['security']));
+test('Screenshot greeting receives a greeting without human escalation',()=>{const r=getReply('السلام عليكم');assert.match(r.text,/وعليكم السلام/);assert.equal(r.review,false);assert.deepEqual(r.sources,[]);assert.equal(r.mode,'free-local');});
+test('Full Arabic greeting handles diacritics and punctuation',()=>{const r=getReply('السَّلَامُ عَلَيْكُمْ ورحمة الله وبركاته!');assert.match(r.text,/وعليكم السلام/);assert.equal(r.language,'ar');assert.equal(r.review,false);});
+test('Other Arabic greetings receive a helpful local welcome',()=>{for(const q of ['مرحباً','أهلاً وسهلاً','صباح الخير','مساء الخير']){const r=getReply(q);assert.equal(r.review,false);assert.match(r.text,/كيف أساعدك/);}});
+test('English greetings receive an English welcome',()=>{for(const q of ['Hello!','HI','Good morning']){const r=getReply(q);assert.equal(r.language,'en');assert.equal(r.review,false);assert.match(r.text,/Hello!/);}});
+test('A greeting does not hide an unsupported factual question',()=>{const r=getReply('Hello, who are your customers?');assert.equal(r.review,true);assert.match(r.text,/cannot verify/);});
+test('A question with a greeting still retrieves its grounded answer',()=>{const r=getReply('السلام عليكم، ما سعر الاشتراك؟');assert.deepEqual(r.topics,['pricing']);assert.match(r.text,/أمثلة فقط/);});
 test('Multiple topics retain both source answers',()=>{const r=getReply('What are your pricing and refund terms?');assert.deepEqual(r.topics,['pricing','refund']);assert.match(r.text,/human representative/);assert.equal(r.sources.length,2);});
 test('Support hours never promises human availability',()=>assert.match(getReply('What are your support hours?').text,/not been established/));
 test('Integration facts never claim live services',()=>assert.match(getReply('Can you connect to Shopify?').text,/not connected/));
